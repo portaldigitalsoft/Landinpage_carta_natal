@@ -2,37 +2,94 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oráculo de Salomé - Consulta Astral</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Oráculo de Salomé</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,500&display=swap');
 
-        body { background-color: #000; margin: 0; padding: 10px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        /* RESET PARA FULL SCREEN */
+        * { box-sizing: border-box; }
+        body { 
+            background-color: #000; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            min-height: 100vh;
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+        }
 
         #modulo-salome-final {
-            width: 100%; max-width: 400px; background: #000; border-radius: 15px; overflow: hidden;
-            border: 1px solid #6a0dad; box-shadow: 0 0 25px rgba(106,13,173,0.5);
-            font-family: 'Playfair Display', serif; color: #fff; text-align: center;
+            width: 100%;
+            min-height: 100vh;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
-        .glow-text { text-shadow: 0 0 8px rgba(168,85,247,0.6); color: #fff; }
+
+        /* IMAGEN Y CONTENEDORES */
+        .img-glow { 
+            width: 100%; 
+            display: block;
+            border-bottom: 1px solid #6a0dad;
+            animation: breathing 4s ease-in-out infinite;
+        }
+
+        .contenido-padding {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .glow-text { text-shadow: 0 0 8px rgba(168,85,247,0.6); margin-bottom: 25px; }
+
+        /* INPUTS OPTIMIZADOS PARA MÓVIL */
         .input-salome, .textarea-salome {
-            width: 85%; padding: 12px; margin: 8px 0; background: #111;
-            border: none; border-bottom: 1px solid #6a0dad; color: #fff;
-            font-size: 14px; font-family: inherit; outline: none; border-radius: 5px;
+            width: 100%; 
+            padding: 15px; 
+            margin: 10px 0; 
+            background: #111;
+            border: none; 
+            border-bottom: 2px solid #6a0dad; 
+            color: #fff;
+            font-size: 16px; /* Evita zoom automático en iOS/Android */
+            font-family: inherit; 
+            outline: none; 
+            border-radius: 8px;
         }
-        .textarea-salome { border: 1px solid #6a0dad; min-height: 80px; resize: none; }
-        .input-salome:focus, .textarea-salome:focus { border-color: #a855f7; box-shadow: 0 0 10px rgba(168,85,247,0.3); }
-        .label-salome { font-size: 11px; color: #a855f7; display: block; text-align: left; margin-left: 7%; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .textarea-salome { border: 1px solid #6a0dad; min-height: 100px; resize: none; }
+        
+        .label-salome { 
+            font-size: 12px; 
+            color: #a855f7; 
+            display: block; 
+            text-align: left; 
+            margin-top: 15px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+
         .btn-salome {
-            background: transparent; border: 1px solid #a855f7; color: #fff;
-            padding: 15px 30px; border-radius: 30px; cursor: pointer;
-            font-family: inherit; text-transform: uppercase; letter-spacing: 2px;
-            margin: 20px 0; transition: 0.4s; box-shadow: 0 0 15px rgba(168,85,247,0.3);
+            width: 90%;
+            background: transparent; 
+            border: 1px solid #a855f7; 
+            color: #fff;
+            padding: 18px; 
+            border-radius: 40px; 
+            cursor: pointer;
+            font-family: inherit; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            margin: 25px 0; 
+            transition: 0.4s; 
+            box-shadow: 0 0 15px rgba(168,85,247,0.3);
+            font-weight: bold;
         }
-        .btn-salome:hover { background: #6a0dad; box-shadow: 0 0 25px rgba(168,85,247,0.6); }
-        @keyframes breathing { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; transform: scale(1.01); } }
-        .img-glow { width: 100%; animation: breathing 4s ease-in-out infinite; border-bottom: 1px solid #6a0dad; }
-        .divider-salome { border: none; border-top: 1px solid #6a0dad; margin: 20px 7%; }
+
+        @keyframes breathing { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; transform: scale(1.02); } }
+        .divider-salome { border: none; border-top: 1px solid #6a0dad; margin: 30px 0; }
     </style>
 </head>
 <body>
@@ -40,16 +97,16 @@
 <div id="modulo-salome-final">
     <div id="pantalla-1">
         <img src="https://i.ibb.co/zhPxNw6n/AQOQ1-qf-VPfuc-Yf-Qp8-HPt-K6-T5v-HLVo-Gjwcr-1q8ti-M3pd79b-HEB-SITy5-tj02o-EFIeix-D-a-EPr-Agnou-HEn-Z7s.jpg" class="img-glow" alt="Salomé">
-        <div style="padding:25px;">
-            <p class="glow-text" style="font-style:italic;font-size:18px;">"Te revelo los secretos de los Astros..."</p>
-            <button type="button" id="btnAcceder" class="btn-salome" onclick="pasarAPantalla2()">Acceder al Oráculo</button>
+        <div class="contenido-padding" style="text-align: center;">
+            <p class="glow-text" style="font-style:italic; font-size:20px;">"Te revelo los secretos de los Astros..."</p>
+            <button type="button" class="btn-salome" onclick="pasarAPantalla2()">Acceder al Oráculo</button>
         </div>
     </div>
 
     <div id="pantalla-2" style="display:none;">
-        <iframe id="vidSalome" src="" width="100%" style="display:block;aspect-ratio:9/16;border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>
-        <div style="padding:20px;">
-            <p style="font-size:15px; margin-bottom:15px; color:#a855f7;">Soy Salomé. Necesito tus datos para la conexión astral:</p>
+        <iframe id="vidSalome" src="" width="100%" style="display:block; aspect-ratio:9/16; border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <div class="contenido-padding">
+            <p style="font-size:16px; margin-bottom:20px; color:#a855f7; text-align: center;">Soy Salomé. Necesito tus datos para la conexión astral:</p>
             
             <label class="label-salome">Tu nombre:</label>
             <input type="text" id="sal_nom" placeholder="Escribe aquí..." class="input-salome">
@@ -110,11 +167,14 @@ function finalizarSalome() {
                 + "📍 Lugar: " + l + "\n"
                 + "⏰ Hora: " + salFormatHora(h);
         if (t) { msg += "\n🔮 Tema de enfoque: " + t; }
-        window.open("https://wa.me/5493764263698?text=" + encodeURIComponent(msg));
+        
+        // Redirección directa mejorada para móviles
+        window.location.href = "https://wa.me/5493764263698?text=" + encodeURIComponent(msg);
     } else {
         alert("Salomé necesita tus datos básicos para iniciar la conexión espiritual.");
     }
 }
 </script>
 </body>
-</html>
+    </html>
+    
