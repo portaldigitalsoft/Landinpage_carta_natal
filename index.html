@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oráculo de Salomé - Consulta Astral</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,500&display=swap');
+
+        body { background-color: #000; margin: 0; padding: 10px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+        #modulo-salome-final {
+            width: 100%; max-width: 400px; background: #000; border-radius: 15px; overflow: hidden;
+            border: 1px solid #6a0dad; box-shadow: 0 0 25px rgba(106,13,173,0.5);
+            font-family: 'Playfair Display', serif; color: #fff; text-align: center;
+        }
+        .glow-text { text-shadow: 0 0 8px rgba(168,85,247,0.6); color: #fff; }
+        .input-salome, .textarea-salome {
+            width: 85%; padding: 12px; margin: 8px 0; background: #111;
+            border: none; border-bottom: 1px solid #6a0dad; color: #fff;
+            font-size: 14px; font-family: inherit; outline: none; border-radius: 5px;
+        }
+        .textarea-salome { border: 1px solid #6a0dad; min-height: 80px; resize: none; }
+        .input-salome:focus, .textarea-salome:focus { border-color: #a855f7; box-shadow: 0 0 10px rgba(168,85,247,0.3); }
+        .label-salome { font-size: 11px; color: #a855f7; display: block; text-align: left; margin-left: 7%; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-salome {
+            background: transparent; border: 1px solid #a855f7; color: #fff;
+            padding: 15px 30px; border-radius: 30px; cursor: pointer;
+            font-family: inherit; text-transform: uppercase; letter-spacing: 2px;
+            margin: 20px 0; transition: 0.4s; box-shadow: 0 0 15px rgba(168,85,247,0.3);
+        }
+        .btn-salome:hover { background: #6a0dad; box-shadow: 0 0 25px rgba(168,85,247,0.6); }
+        @keyframes breathing { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; transform: scale(1.01); } }
+        .img-glow { width: 100%; animation: breathing 4s ease-in-out infinite; border-bottom: 1px solid #6a0dad; }
+        .divider-salome { border: none; border-top: 1px solid #6a0dad; margin: 20px 7%; }
+    </style>
+</head>
+<body>
+
+<div id="modulo-salome-final">
+    <div id="pantalla-1">
+        <img src="https://i.ibb.co/zhPxNw6n/AQOQ1-qf-VPfuc-Yf-Qp8-HPt-K6-T5v-HLVo-Gjwcr-1q8ti-M3pd79b-HEB-SITy5-tj02o-EFIeix-D-a-EPr-Agnou-HEn-Z7s.jpg" class="img-glow" alt="Salomé">
+        <div style="padding:25px;">
+            <p class="glow-text" style="font-style:italic;font-size:18px;">"Te revelo los secretos de los Astros..."</p>
+            <button type="button" id="btnAcceder" class="btn-salome" onclick="pasarAPantalla2()">Acceder al Oráculo</button>
+        </div>
+    </div>
+
+    <div id="pantalla-2" style="display:none;">
+        <iframe id="vidSalome" src="" width="100%" style="display:block;aspect-ratio:9/16;border:none;" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        <div style="padding:20px;">
+            <p style="font-size:15px; margin-bottom:15px; color:#a855f7;">Soy Salomé. Necesito tus datos para la conexión astral:</p>
+            
+            <label class="label-salome">Tu nombre:</label>
+            <input type="text" id="sal_nom" placeholder="Escribe aquí..." class="input-salome">
+
+            <label class="label-salome">Fecha de nacimiento:</label>
+            <input type="date" id="sal_fec" class="input-salome">
+
+            <label class="label-salome">Ciudad y País:</label>
+            <input type="text" id="sal_lug" placeholder="Ej: Posadas, Argentina" class="input-salome">
+
+            <label class="label-salome">Hora de nacimiento (Opcional):</label>
+            <input type="time" id="sal_hor" class="input-salome">
+
+            <hr class="divider-salome">
+
+            <label class="label-salome">¿Qué deseas consultar?</label>
+            <textarea id="sal_tema" class="textarea-salome" placeholder="Amor, salud, dinero..."></textarea>
+
+            <button type="button" class="btn-salome" onclick="finalizarSalome()" style="width:100%; border-color:#25d366; background: rgba(37, 211, 102, 0.1);">Enviar a WhatsApp</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function pasarAPantalla2() {
+    document.getElementById('pantalla-1').style.display = 'none';
+    document.getElementById('pantalla-2').style.display = 'block';
+    document.getElementById('vidSalome').src = 'https://www.youtube.com/embed/Q_750_NLksw?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    window.scrollTo(0,0);
+}
+
+function salFormatFecha(str) {
+    if (!str) return '';
+    var p = str.split('-');
+    return p[2] + '/' + p[1] + '/' + p[0];
+}
+
+function salFormatHora(str) {
+    if (!str) return 'No especificada';
+    var p = str.split(':');
+    var h = parseInt(p[0]);
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    var h12 = h % 12 || 12;
+    return h12 + ':' + p[1] + ' ' + ampm;
+}
+
+function finalizarSalome() {
+    var n = document.getElementById('sal_nom').value.trim();
+    var f = document.getElementById('sal_fec').value;
+    var l = document.getElementById('sal_lug').value.trim();
+    var h = document.getElementById('sal_hor').value;
+    var t = document.getElementById('sal_tema').value.trim();
+
+    if (n && f && l) {
+        var msg = "#protocolocartanatal\n✨ Solicitud de Carta Natal ✨\n"
+                + "👤 Nombre: " + n + "\n"
+                + "📅 Fecha: " + salFormatFecha(f) + "\n"
+                + "📍 Lugar: " + l + "\n"
+                + "⏰ Hora: " + salFormatHora(h);
+        if (t) { msg += "\n🔮 Tema de enfoque: " + t; }
+        window.open("https://wa.me/5493764263698?text=" + encodeURIComponent(msg));
+    } else {
+        alert("Salomé necesita tus datos básicos para iniciar la conexión espiritual.");
+    }
+}
+</script>
+</body>
+</html>
