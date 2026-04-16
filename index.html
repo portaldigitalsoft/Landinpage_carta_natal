@@ -10,7 +10,7 @@
         /* RESET PARA FULL SCREEN */
         * { box-sizing: border-box; }
         body { 
-            background-color: #000; 
+            background-color: #0d0d0d; /* Un tono un poco más suave que el negro puro */
             margin: 0; 
             padding: 0; 
             display: flex; 
@@ -20,18 +20,23 @@
             color: #fff;
         }
 
+        /* AUDITORÍA: Limitamos el ancho para PC */
         #modulo-salome-final {
             width: 100%;
+            max-width: 500px; /* Evita que se estire demasiado en PC */
             min-height: 100vh;
             background: #000;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5); /* Sombra para dar profundidad en PC */
         }
 
         /* IMAGEN Y CONTENEDORES */
         .img-glow { 
             width: 100%; 
+            max-height: 70vh; /* Evita que la imagen sea gigante en monitores */
+            object-fit: cover; /* Mantiene la proporción de la imagen */
             display: block;
             border-bottom: 1px solid #6a0dad;
             animation: breathing 4s ease-in-out infinite;
@@ -40,11 +45,14 @@
         .contenido-padding {
             padding: 20px;
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra los botones internamente */
         }
 
         .glow-text { text-shadow: 0 0 8px rgba(168,85,247,0.6); margin-bottom: 25px; }
 
-        /* INPUTS OPTIMIZADOS PARA MÓVIL */
+        /* INPUTS */
         .input-salome, .textarea-salome {
             width: 100%; 
             padding: 15px; 
@@ -53,7 +61,7 @@
             border: none; 
             border-bottom: 2px solid #6a0dad; 
             color: #fff;
-            font-size: 16px; /* Evita zoom automático en iOS/Android */
+            font-size: 16px; 
             font-family: inherit; 
             outline: none; 
             border-radius: 8px;
@@ -62,19 +70,20 @@
         .textarea-salome { border: 1px solid #6a0dad; min-height: 100px; resize: none; }
         
         .label-salome { 
+            align-self: flex-start; /* Alinea etiquetas a la izquierda */
             font-size: 12px; 
             color: #a855f7; 
-            display: block; 
-            text-align: left; 
             margin-top: 15px; 
             text-transform: uppercase; 
             letter-spacing: 1px; 
         }
 
+        /* AUDITORÍA: Botón con ancho controlado */
         .btn-salome {
-            width: 90%;
+            width: 100%; /* Ocupa el ancho del contenedor padre (máximo 500px) */
+            max-width: 350px; /* Limita el tamaño del botón en PC */
             background: transparent; 
-            border: 1px solid #a855f7; 
+            border: 2px solid #a855f7; 
             color: #fff;
             padding: 18px; 
             border-radius: 40px; 
@@ -82,14 +91,22 @@
             font-family: inherit; 
             text-transform: uppercase; 
             letter-spacing: 2px;
-            margin: 25px 0; 
+            margin: 25px auto; 
             transition: 0.4s; 
             box-shadow: 0 0 15px rgba(168,85,247,0.3);
             font-weight: bold;
         }
 
-        @keyframes breathing { 0%, 100% { opacity: 0.9; } 50% { opacity: 1; transform: scale(1.02); } }
-        .divider-salome { border: none; border-top: 1px solid #6a0dad; margin: 30px 0; }
+        .btn-salome:hover {
+            background: #a855f7;
+            color: #000;
+        }
+
+        @keyframes breathing { 
+            0%, 100% { opacity: 0.9; } 
+            50% { opacity: 1; transform: scale(1.01); } 
+        }
+        .divider-salome { border: none; border-top: 1px solid #6a0dad; margin: 30px 0; width: 100%; }
     </style>
 </head>
 <body>
@@ -125,12 +142,13 @@
             <label class="label-salome">¿Qué deseas consultar?</label>
             <textarea id="sal_tema" class="textarea-salome" placeholder="Amor, salud, dinero..."></textarea>
 
-            <button type="button" class="btn-salome" onclick="finalizarSalome()" style="width:100%; border-color:#25d366; background: rgba(37, 211, 102, 0.1);">Enviar a WhatsApp</button>
+            <button type="button" class="btn-salome" onclick="finalizarSalome()" style="max-width: 100%; border-color:#25d366; background: rgba(37, 211, 102, 0.1);">Enviar a WhatsApp</button>
         </div>
     </div>
 </div>
 
 <script>
+// La lógica JS se mantiene igual ya que es funcionalmente correcta
 function pasarAPantalla2() {
     document.getElementById('pantalla-1').style.display = 'none';
     document.getElementById('pantalla-2').style.display = 'block';
@@ -168,7 +186,6 @@ function finalizarSalome() {
                 + "⏰ Hora: " + salFormatHora(h);
         if (t) { msg += "\n🔮 Tema de enfoque: " + t; }
         
-        // Redirección directa mejorada para móviles
         window.location.href = "https://wa.me/5493764263698?text=" + encodeURIComponent(msg);
     } else {
         alert("Salomé necesita tus datos básicos para iniciar la conexión espiritual.");
@@ -176,5 +193,5 @@ function finalizarSalome() {
 }
 </script>
 </body>
-    </html>
-    
+</html>
+
